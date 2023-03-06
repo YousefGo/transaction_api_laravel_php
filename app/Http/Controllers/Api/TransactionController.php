@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Resources\CategoryResource;
+use App\Models\Transaction;
+use App\Http\Resources\TransactionResource;
+use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\StoreCategoryRequest;
-class CategoryController extends Controller
+
+
+class TransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //
     public function index()
     {
         //
-        return  CategoryResource::collection(Category::select('id','name')->get())  ;
+        return  TransactionResource::collection(Transaction::all())  ;
     }
     public function index_2()
     {
@@ -26,38 +27,38 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreTransactionRequest $request)
     {
         //
-        return  new  CategoryResource(Category::create($request->validated()));
+        return  new  TransactionResource(Transaction::create($request->validated()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Transaction $transaction)
     {
         //
-        return  new CategoryResource($category);
+        return  new TransactionResource($transaction);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreCategoryRequest $request, Category $category)
+    public function update(StoreTransactionRequest $request, Transaction $transaction)
     {
         //
        $category->update($request->validated());
-       return  new CategoryResource($category) ;
+       return  new TransactionResource($transaction) ;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Transaction $transaction)
     {
         //
-        $category->delete();
+        $transaction->delete();
         return  response()->noContent();
     }
 }
