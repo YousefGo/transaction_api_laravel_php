@@ -18,11 +18,7 @@ class TransactionController extends Controller
         //
         return  TransactionResource::collection(Transaction::all())  ;
     }
-    public function index_2()
-    {
-        //
-        return Category::select('id','name')->get();
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -48,7 +44,7 @@ class TransactionController extends Controller
     public function update(StoreTransactionRequest $request, Transaction $transaction)
     {
         //
-       $category->update($request->validated());
+       $transaction->update($request->validated());
        return  new TransactionResource($transaction) ;
     }
 
