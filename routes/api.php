@@ -18,8 +18,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('categoryies',[App\HTTP\Controllers\Api\CategoryController::class,'index']);
-// Route::get('categoryies/{category}',[App\HTTP\Controllers\Api\CategoryController::class,'show']);
 
-Route::apiResource('categories',App\HTTP\Controllers\Api\CategoryController::class);
-Route::apiResource('transactions',App\HTTP\Controllers\Api\TransactionController::class);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('categories',App\HTTP\Controllers\Api\CategoryController::class);
+    Route::apiResource('transactions',App\HTTP\Controllers\Api\TransactionController::class);   
+});
