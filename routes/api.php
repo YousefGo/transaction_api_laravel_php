@@ -2,8 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,20 +25,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('transactions',App\HTTP\Controllers\Api\TransactionController::class);
 });
 
-Route::post('/sanctum/token', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
-
-    return $user->createToken($request->device_name)->plainTextToken;
-});
+Route::post('/auth/login', [\App\Http\Controllers\Api\AuthController::class,'login']);
+Route::post('/auth/register', [\App\Http\Controllers\Api\AuthController::class,'register']);
+Route::post('/auth/logout', [\App\Http\Controllers\Api\AuthController::class,'logout']);
